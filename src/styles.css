@@ -1,3 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #EE641E;
+  --color-primary-dark: #D45012;
+  --color-primary-light: #FF8F5E;
+  --color-secondary: #0F172A;
+  --color-accent: #FFC107;
+  --color-gold: #FFC107;
+  --color-bg-cream: #FFF4E8;
+  --color-bg-light: #F8FAFC;
+  
+  --font-sans: "Inter", "Outfit", system-ui, sans-serif;
+  
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-secondary font-sans antialiased;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, #FFF4E8 0%, #FFFFFF 100%);
+  }
+
+  .underline-highlight {
+    @apply relative inline-block;
+  }
+  .underline-highlight::after {
+    content: '';
+    @apply absolute bottom-1 left-0 w-full h-[8px] bg-accent/30 -z-10 rounded-full;
+  }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.star {
+  filter: drop-shadow(0 0 2px rgba(255, 193, 7, 0.4));
+}
