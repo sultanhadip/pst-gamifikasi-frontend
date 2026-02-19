@@ -1,0 +1,74 @@
+:host {
+    display: block;
+}
+
+.widget-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+}
+
+.widget-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.bps-logo-small {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #f97316, #22c55e, #3b82f6);
+    border-radius: 4px;
+}
+
+.widget-header h4 {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0ea5e9;
+    text-transform: uppercase;
+}
+
+.widget-expand {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.widget-body {
+    padding: 1rem;
+}
+
+.news-image-placeholder {
+    width: 100%;
+    height: 140px;
+    background: #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-overlay {
+    z-index: 1;
+}
+
+.news-date {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.news-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}

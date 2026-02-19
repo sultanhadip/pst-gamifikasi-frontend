@@ -1,0 +1,52 @@
+:host {
+    display: block;
+}
+
+/* Footer structure in app.html will push it to the bottom */
+.app-footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--color-border);
+    background: white;
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Footer Logos */
+.logo-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo span {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+}
+
+.logo-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.logo-badge.blue {
+    background: radial-gradient(circle, #fcd34d 30%, #1e3a8a 31%);
+    /* STIS: Yellow star inside blue circle abstraction */
+}
+
+.logo-badge.orange {
+    background: linear-gradient(135deg, #f97316, #22c55e, #3b82f6);
+    /* BPS: Abstract tricolor */
+    border-radius: 4px;
+}

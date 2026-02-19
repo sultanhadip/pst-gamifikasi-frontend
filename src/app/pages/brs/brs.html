@@ -1,0 +1,40 @@
+<div class="page-container">
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="page-header">
+            <h2 class="page-title">Daftar Berita Resmi Statistik (BRS)</h2>
+        </div>
+
+        <div class="cards-list">
+            <div class="publication-card" *ngFor="let item of brsList">
+                <div class="card-image-wrapper">
+                    <!-- Placeholder for BRS cover (maybe different color?) -->
+                    <div class="book-cover-placeholder brs-theme">
+                        <div class="cover-header">
+                            <span>BERITA RESMI STATISTIK</span>
+                        </div>
+                        <div class="cover-graphic">
+                            <span>NEWS</span>
+                            <span>2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="pub-meta">
+                        <span class="icon-calendar">📅</span>
+                        <span>{{ item.date }}</span>
+                    </div>
+                    <h3 class="pub-title">{{ item.title }}</h3>
+                    <p class="pub-description">{{ item.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Widgets -->
+    <div class="right-widgets">
+        <app-stats-ribbon></app-stats-ribbon>
+        <app-filter-widget></app-filter-widget>
+        <app-daily-mission-widget></app-daily-mission-widget>
+    </div>
+</div>

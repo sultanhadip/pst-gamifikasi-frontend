@@ -1,0 +1,85 @@
+:host {
+    display: block;
+}
+
+.widget-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+}
+
+.widget-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.widget-header h4 {
+    flex: 1;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0ea5e9;
+    /* Light blue title */
+    text-transform: uppercase;
+}
+
+.widget-expand {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+}
+
+.widget-body {
+    padding: 1.5rem;
+}
+
+.filter-group {
+    margin-bottom: 1.25rem;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text-secondary);
+}
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+    background: #f8fafc;
+}
+
+.form-input:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #0ea5e9;
+}
+
+.btn-filter {
+    width: 100%;
+    background: #0ea5e9;
+    /* Light blue */
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.4);
+}
+
+.btn-filter:hover {
+    background: #0284c7;
+}

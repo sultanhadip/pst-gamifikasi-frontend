@@ -1,0 +1,170 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.page-container {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Leaderboard Header */
+.leaderboard-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.trophy-icon {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.trophy-cup {
+    width: 40px;
+    height: 40px;
+    background: #fbbf24;
+    border-radius: 4px 4px 50% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.trophy-star {
+    color: white;
+    font-size: 1.2rem;
+}
+
+.trophy-base {
+    width: 30px;
+    height: 8px;
+    background: #d97706;
+    position: absolute;
+    bottom: 20px;
+    border-radius: 2px;
+}
+
+/* Wings/Decor of trophy */
+.trophy-icon::before {
+    content: '🌿';
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+/* Tabs */
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.tabs-pill {
+    display: flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 12px;
+    gap: 4px;
+}
+
+.tabs-pill button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: none;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.tabs-pill button.active {
+    background: white;
+    color: var(--color-text-primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Leaderboard List */
+.leaderboard-list {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.leader-row {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid #f1f5f9;
+    gap: 1.5rem;
+}
+
+.leader-row:last-child {
+    border-bottom: none;
+}
+
+.rank-col {
+    width: 40px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #3b82f6;
+    /* Blue for rank numbers */
+    text-align: center;
+}
+
+.avatar-col {
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 48px;
+    height: 48px;
+    background: #f1f5f9;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 2px solid #e2e8f0;
+}
+
+.name-col {
+    flex: 1;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.xp-col {
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+.right-widgets {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}

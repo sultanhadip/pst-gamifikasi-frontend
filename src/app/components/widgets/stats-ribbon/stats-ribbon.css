@@ -1,0 +1,22 @@
+:host {
+    display: block;
+}
+
+.stats-ribbon {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    padding: 0.5rem;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+.icon-stat {
+    font-size: 1.25rem;
+}

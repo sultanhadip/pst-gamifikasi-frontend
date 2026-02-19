@@ -1,0 +1,43 @@
+<div class="page-container">
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="leaderboard-header">
+            <div class="trophy-icon">
+                <div class="trophy-base"></div>
+                <div class="trophy-cup">
+                    <span class="trophy-star">★</span>
+                </div>
+            </div>
+            <h2 class="page-title">Papan Peringkat</h2>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs-pill">
+                <button [class.active]="activeTab() === 'xp'" (click)="setTab('xp')">Poin XP</button>
+                <button [class.active]="activeTab() === 'publikasi'" (click)="setTab('publikasi')">Publikasi</button>
+                <button [class.active]="activeTab() === 'brs'" (click)="setTab('brs')">BRS</button>
+                <button [class.active]="activeTab() === 'kuis'" (click)="setTab('kuis')">Kuis</button>
+            </div>
+        </div>
+
+        <div class="leaderboard-list">
+            <div class="leader-row" *ngFor="let leader of leaders">
+                <div class="rank-col">{{ leader.rank }}</div>
+                <div class="avatar-col">
+                    <div class="avatar-circle">
+                        {{ leader.avatar }}
+                    </div>
+                </div>
+                <div class="name-col">{{ leader.name }}</div>
+                <div class="xp-col">{{ leader.xp }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Widgets -->
+    <div class="right-widgets">
+        <app-stats-ribbon></app-stats-ribbon>
+        <app-kegiatan-bps-widget></app-kegiatan-bps-widget>
+        <app-daily-mission-widget></app-daily-mission-widget>
+    </div>
+</div>

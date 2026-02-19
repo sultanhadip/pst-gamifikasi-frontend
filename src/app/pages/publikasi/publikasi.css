@@ -1,0 +1,131 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.page-container {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.publication-card {
+    display: flex;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.publication-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: #cbd5e1;
+}
+
+.card-image-wrapper {
+    flex-shrink: 0;
+    width: 140px;
+    height: 180px;
+}
+
+/* CSS Composition for Book Cover */
+.book-cover-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    /* Green gradient */
+    border-radius: 4px;
+    /* Book cover slight radius */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.cover-header {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.cover-graphic {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+.pub-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+.pub-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0ea5e9;
+    /* Light blue link color */
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.pub-description {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    /* Truncate text */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.right-widgets {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}

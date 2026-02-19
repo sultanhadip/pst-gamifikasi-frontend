@@ -1,0 +1,394 @@
+:host {
+    display: block;
+    padding-top: var(--header-height);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
+}
+
+/* Character Composition */
+.hero-visual {
+    width: 400px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-composition {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    /* background: rgba(0,0,0,0.05); Debug */
+}
+
+/* Character Body - Pie Chart */
+.char-body {
+    width: 180px;
+    height: 180px;
+    background: #0d9488;
+    /* Teal */
+    border-radius: 50%;
+    border: 4px solid #1f2937;
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    overflow: visible;
+    /* Changed to visible for limbs */
+    z-index: 10;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Pie Slices inside body (overflow hidden on pseudo element to keep circle) */
+.char-body::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* Red Slice */
+.char-body>.slice-red {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    background-color: #ef4444;
+    border-top-right-radius: 90px;
+}
+
+/* Yellow Slice */
+.char-body>.slice-yellow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    background-color: #fbbf24;
+    transform-origin: bottom left;
+    transform: rotate(-90deg);
+    border-top-left-radius: 90px;
+}
+
+
+/* Face */
+.char-face {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 80px;
+    z-index: 20;
+}
+
+.eye {
+    position: absolute;
+    top: 20px;
+    width: 28px;
+    height: 32px;
+    background: white;
+    border-radius: 50%;
+    border: 3px solid #1f2937;
+}
+
+/* Pupils */
+.eye::after {
+    content: '';
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: #1f2937;
+    border-radius: 50%;
+}
+
+.left-eye {
+    left: 15px;
+    transform: rotate(-5deg);
+}
+
+.right-eye {
+    right: 15px;
+    transform: rotate(5deg);
+}
+
+/* Eyebrows - Angry */
+.left-eye::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -5px;
+    width: 40px;
+    height: 12px;
+    background: #1f2937;
+    transform: rotate(25deg);
+    border-radius: 4px;
+}
+
+.right-eye::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -5px;
+    width: 40px;
+    height: 12px;
+    background: #1f2937;
+    transform: rotate(-25deg);
+    border-radius: 4px;
+}
+
+.mouth {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 15px;
+    background: white;
+    border: 3px solid #1f2937;
+    border-radius: 10px;
+}
+
+/* Limbs */
+/* Shield Arm */
+.arm.right-arm {
+    position: absolute;
+    right: -30px;
+    top: 100px;
+    width: 60px;
+    height: 20px;
+    background: #0d9488;
+    border: 4px solid #1f2937;
+    border-radius: 10px;
+    transform: rotate(20deg);
+    z-index: 5;
+}
+
+/* Sword Arm */
+.arm.left-arm {
+    position: absolute;
+    left: -40px;
+    top: 90px;
+    width: 60px;
+    height: 20px;
+    background: #0d9488;
+    /* Teal */
+    border: 4px solid #1f2937;
+    border-radius: 10px;
+    transform: rotate(-40deg);
+    z-index: 5;
+}
+
+/* Legs */
+.leg.left-leg {
+    position: absolute;
+    bottom: -30px;
+    left: 40px;
+    width: 25px;
+    height: 50px;
+    background: #0d9488;
+    border: 4px solid #1f2937;
+    border-radius: 10px;
+    z-index: 5;
+}
+
+.leg.right-leg {
+    position: absolute;
+    bottom: -30px;
+    right: 40px;
+    width: 25px;
+    height: 50px;
+    background: #0d9488;
+    border: 4px solid #1f2937;
+    border-radius: 10px;
+    z-index: 5;
+}
+
+/* Sword Element */
+.sword {
+    position: absolute;
+    left: -40px;
+    top: -40px;
+    width: 30px;
+    height: 140px;
+    background: #e2e8f0;
+    /* Silver Blade */
+    border: 3px solid #1f2937;
+    transform: rotate(-25deg);
+    z-index: 15;
+    /* In front of arm */
+    border-radius: 4px 4px 0 0;
+}
+
+/* Sword Handle */
+.sword::before {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -15px;
+    width: 60px;
+    height: 15px;
+    background: #b45309;
+    /* Gold/Bronze */
+    border: 3px solid #1f2937;
+    border-radius: 4px;
+}
+
+/* Sword Grip */
+.sword::after {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    left: 5px;
+    width: 14px;
+    height: 40px;
+    background: #78350f;
+    /* Brown Leather */
+    border: 3px solid #1f2937;
+    border-radius: 0 0 4px 4px;
+}
+
+/* Shield Element */
+.shield {
+    position: absolute;
+    right: -50px;
+    top: 80px;
+    width: 90px;
+    height: 110px;
+    background: #cbd5e1;
+    /* Silver */
+    border: 4px solid #1f2937;
+    border-radius: 0 0 50px 50px;
+    z-index: 15;
+    /* In front of arm */
+    box-shadow: inset 0 0 0 10px #94a3b8;
+    /* Inner detail */
+}
+
+/* Hair */
+.char-body::after {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    width: 140px;
+    height: 60px;
+    background: #374151;
+    /* Dark Grey Hair */
+    border-radius: 50% 50% 0 0;
+    z-index: 25;
+    clip-path: polygon(0 40%, 100% 40%, 90% 100%, 10% 100%);
+    transform: rotate(-5deg);
+    /* Simple hair abstraction */
+    display: block;
+}
+
+
+/* Text Section */
+.hero-text {
+    max-width: 500px;
+    /* text-align: center; Screenshot looks center-aligned text block */
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+    color: #3f3f46;
+    /* Screenshot dark gray */
+    margin-bottom: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.btn-cta {
+    background-color: #0ea5e9;
+    /* Cyan Blue */
+    color: white;
+    padding: 1rem 3rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 0 #0284c7;
+    /* Pseudo-3D button */
+}
+
+.btn-cta:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #0284c7;
+}
+
+/* Footer */
+.app-footer {
+    padding: 2rem 0;
+    border-top: 1px solid var(--color-border);
+    margin-top: auto;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Footer Logos */
+.logo-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo span {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+}
+
+.logo-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.logo-badge.blue {
+    background: radial-gradient(circle, #fcd34d 30%, #1e3a8a 31%);
+    /* STIS: Yellow star inside blue circle abstraction */
+}
+
+.logo-badge.orange {
+    background: linear-gradient(135deg, #f97316, #22c55e, #3b82f6);
+    /* BPS: Abstract tricolor */
+    border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}

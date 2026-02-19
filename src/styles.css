@@ -1,56 +1,70 @@
-@import "tailwindcss";
+/* Global Styles */
 
-@theme {
-  --color-primary: #EE641E;
-  --color-primary-dark: #D45012;
-  --color-primary-light: #FF8F5E;
-  --color-secondary: #0F172A;
-  --color-accent: #FFC107;
-  --color-gold: #FFC107;
-  --color-bg-cream: #FFF4E8;
-  --color-bg-light: #F8FAFC;
-  
-  --font-sans: "Inter", "Outfit", system-ui, sans-serif;
-  
-  --radius-xl: 1rem;
-  --radius-2xl: 1.5rem;
-  --radius-3xl: 2rem;
+:root {
+    /* StatHero Light Theme Palette */
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f8fafc;
+
+    --color-text-primary: #333333;
+    --color-text-secondary: #64748b;
+
+    --color-primary: #00AEEF;
+    /* Bright Cyan/Blue from button */
+    --color-primary-hover: #0284c7;
+
+    --color-border: #e2e8f0;
+
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+    --font-sans: 'Inter', sans-serif;
+
+    --container-max-width: 1200px;
+    --header-height: 80px;
 }
 
-@layer base {
-  body {
-    @apply bg-white text-secondary font-sans antialiased;
-  }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-@layer utilities {
-  .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
-  }
-
-  .gradient-bg {
-    background: linear-gradient(135deg, #FFF4E8 0%, #FFFFFF 100%);
-  }
-
-  .underline-highlight {
-    @apply relative inline-block;
-  }
-  .underline-highlight::after {
-    content: '';
-    @apply absolute bottom-1 left-0 w-full h-[8px] bg-accent/30 -z-10 rounded-full;
-  }
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
 }
 
-.star {
-  filter: drop-shadow(0 0 2px rgba(255, 193, 7, 0.4));
+ul {
+    list-style: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 20px;
 }

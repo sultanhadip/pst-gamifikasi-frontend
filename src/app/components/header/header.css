@@ -1,0 +1,113 @@
+:host {
+    display: block;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8-x);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Custom CSS Pie Chart Character Icon Mimic */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.pie-chart-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+    background-color: #0d9488;
+    /* Teal Body */
+    border-radius: 50%;
+    border: 2px solid #1f2937;
+    overflow: hidden;
+}
+
+/* Red Slice */
+.pie-chart-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    background-color: #ef4444;
+    /* Red */
+    transform-origin: bottom left;
+}
+
+/* Yellow Slice */
+.pie-chart-icon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 50%;
+    background-color: #fbbf24;
+    /* Yellow */
+    transform-origin: bottom left;
+    transform: rotate(-90deg);
+    /* Adjust angle */
+    border-bottom-left-radius: 100%;
+}
+
+.slice1 {
+    /* Use ::before/after on parent for simpler shapes */
+    display: none;
+}
+
+.slice2 {
+    display: none;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-family: var(--font-sans);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+}
+
+.btn-signin {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    /* Slightly rounded, screenshot shows rect with radius */
+    padding: 0.6rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.btn-signin:hover {
+    background-color: var(--color-primary-hover);
+}
