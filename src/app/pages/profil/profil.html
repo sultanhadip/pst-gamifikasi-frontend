@@ -1,20 +1,21 @@
 <div class="page-container">
     <!-- Main Content -->
-    <div class="main-content" *ngIf="!showAllAchievements()">
+    <div class="main-content" *ngIf="!showAllAchievements() && userProfile()">
         <!-- Profile Header Section -->
         <div class="profile-card">
             <div class="profile-banner">
                 <div class="banner-circle">
-                    <div class="avatar-dragon-wrapper">{{ user.avatar }}</div>
+                    <img *ngIf="userProfile().image" [src]="userProfile().image" class="avatar-img-profil">
+                    <div *ngIf="!userProfile().image" class="avatar-dragon-wrapper">{{ userProfile().name.charAt(0) }}</div>
                 </div>
             </div>
 
             <div class="profile-header-content">
                 <div class="user-main-info">
-                    <h2>{{ user.name }}</h2>
-                    <p class="user-role">{{ user.role }}</p>
-                    <p class="user-join">Bergabung {{ user.joined }}</p>
-                    <button class="btn-gelar">PILIH GELAR</button>
+                    <h2>{{ userProfile().name }}</h2>
+                    <p class="user-role">{{ userProfile().role }}</p>
+                    <p class="user-join">Bergabung {{ userProfile().createdAt | date:'MMMM yyyy' }}</p>
+                    <button class="btn-gelar" (click)="toggleTitlesModal()">PILIH GELAR</button>
                 </div>
 
                 <div class="profile-actions">
@@ -32,14 +33,35 @@
         </div>
 
         <!-- Statistics Section -->
-        <div class="section-container">
+        <div class="section-container" *ngIf="userProgress()">
             <h3>Statistik</h3>
             <div class="stats-grid-2">
-                <div class="stat-mini-card" *ngFor="let s of stats">
-                    <div class="stat-icon-bg">{{ s.icon }}</div>
+                <div class="stat-mini-card">
+                    <div class="stat-icon-bg">🔥</div>
                     <div class="stat-text">
-                        <div class="stat-value">{{ s.value }}</div>
-                        <div class="stat-label">{{ s.label }}</div>
+                        <div class="stat-value">{{ userProfile().streaks }}</div>
+                        <div class="stat-label">Kehadiran beruntun</div>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-icon-bg">⚡</div>
+                    <div class="stat-text">
+                        <div class="stat-value">{{ userProgress().points }}</div>
+                        <div class="stat-label">Total Poin</div>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-icon-bg">📑</div>
+                    <div class="stat-text">
+                        <div class="stat-value">{{ userProgress().publications }}</div>
+                        <div class="stat-label">Publikasi dibaca</div>
+                    </div>
+                </div>
+                <div class="stat-mini-card">
+                    <div class="stat-icon-bg">📁</div>
+                    <div class="stat-text">
+                        <div class="stat-value">{{ userProgress().press }}</div>
+                        <div class="stat-label">BRS dibaca</div>
                     </div>
                 </div>
             </div>
@@ -52,65 +74,35 @@
                 <button class="btn-link" (click)="toggleAchievements()">LIHAT SEMUA</button>
             </div>
 
-            <div class="achievement-preview-card">
+            <div *ngIf="achievements().length > 0" class="achievement-preview-card">
                 <div class="achievement-icon-wrapper shield">🛡️</div>
                 <div class="achievement-content">
-                    <h4>Membaca 1 Dokumen Statistik</h4>
-                    <div class="achievement-progress-row">
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill gray" style="width: 0%"></div>
-                        </div>
-                        <span class="progress-text">0/1</span>
-                    </div>
-                    <p>Telah membaca 1 dokumen statistik</p>
+                    <h4>{{ achievements()[0].name }}</h4>
+                    <p>{{ achievements()[0].description }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- All Achievements View (Screenshot 2) -->
+    <!-- All Achievements View -->
     <div class="main-content" *ngIf="showAllAchievements()">
         <div class="all-achievements-header">
             <button class="btn-back" (click)="toggleAchievements()">←</button>
             <h2 class="page-title-center">Semua Pencapaian</h2>
         </div>
 
-        <div class="achievements-tabs">
-            <button [class.active]="activeAchievementTab() === 'membaca'" (click)="setAchievementTab('membaca')">Membaca
-                Data</button>
-            <button [class.active]="activeAchievementTab() === 'kuis'" (click)="setAchievementTab('kuis')">Menyelesaikan
-                Kuis</button>
-            <button [class.active]="activeAchievementTab() === 'level'" (click)="setAchievementTab('level')">Naik
-                Level</button>
-            <button [class.active]="activeAchievementTab() === 'hadir'"
-                (click)="setAchievementTab('hadir')">Kehadiran</button>
-            <button [class.active]="activeAchievementTab() === 'papan'" (click)="setAchievementTab('papan')">Papan
-                Peringkat</button>
-        </div>
-
         <div class="achievements-list">
-            <div class="achievement-full-card" *ngFor="let a of achievements" [class.locked]="a.status === 'locked'">
+            <div class="achievement-full-card" *ngFor="let a of achievements()">
                 <div class="card-top">
-                    <div class="achievement-badge" [class.shield-blue]="a.status === 'in-progress'"
-                        [class.shield-red]="a.status === 'completed'">🛡️</div>
+                    <div class="achievement-badge shield-blue">🛡️</div>
                     <div class="achievement-info-main">
                         <div class="title-row">
-                            <h4>{{ a.title }}</h4>
-                            <span class="status-pill" [class.in-progress]="a.status === 'in-progress'"
-                                [class.completed]="a.status === 'completed'" [class.locked]="a.status === 'locked'">
-                                {{ a.status | uppercase }}
-                            </span>
+                            <h4>{{ a.name }}</h4>
                         </div>
-                        <p>{{ a.desc }}</p>
-                        <div class="progress-section">
-                            <div class="progress-bar-container">
-                                <div class="progress-bar-fill" [style.width.%]="(a.progress / a.total) * 100"
-                                    [class.yellow]="a.status !== 'locked'"></div>
-                            </div>
-                        </div>
+                        <p>{{ a.description }}</p>
                         <div class="meta-row">
-                            <span class="meta-progress">Progress: {{ a.progress }}/{{ a.total }}</span>
-                            <span class="meta-reward">Reward: {{ a.reward }} points</span>
+                            <span class="meta-reward">Reward: {{ a.rewardXp }} points</span>
+                            <span class="meta-reward">Diamonds: {{ a.rewardDiamonds }}</span>
                         </div>
                     </div>
                 </div>
@@ -123,5 +115,27 @@
         <app-stats-ribbon></app-stats-ribbon>
         <app-daily-mission-widget></app-daily-mission-widget>
         <app-search-user-widget></app-search-user-widget>
+    </div>
+
+    <!-- Titles Modal -->
+    <div class="modal-overlay" *ngIf="showTitlesModal()">
+        <div class="modal-content title-modal">
+            <div class="modal-header">
+                <h3>Pilih Gelar</h3>
+                <button class="btn-close" (click)="toggleTitlesModal()">×</button>
+            </div>
+            <div class="titles-list">
+                <div class="title-item" *ngFor="let t of titles()" [class.active]="t.isActive" (click)="onSetTitle(t.title.id)">
+                    <div class="title-info">
+                        <span class="title-name">{{ t.title.name }}</span>
+                        <span class="title-desc">{{ t.title.description }}</span>
+                    </div>
+                    <span class="active-badge" *ngIf="t.isActive">AKTIF</span>
+                </div>
+                <div *ngIf="titles().length === 0" class="empty-state">
+                    Belum ada gelar yang terbuka. Selesaikan kuis untuk mendapatkan gelar!
+                </div>
+            </div>
+        </div>
     </div>
 </div>

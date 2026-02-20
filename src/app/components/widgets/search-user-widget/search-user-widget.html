@@ -7,7 +7,22 @@
     <div class="widget-body">
         <div class="search-input-wrapper">
             <span class="search-icon">🔍</span>
-            <input type="text" placeholder="Cari nama atau username...">
+            <input type="text" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event); onSearch()" placeholder="Cari nama atau username...">
+        </div>
+        <div class="search-results" *ngIf="searchResults().length > 0">
+            <div class="user-item" *ngFor="let user of searchResults()">
+                <div class="user-avatar-mini">
+                    <img *ngIf="user.image" [src]="user.image">
+                    <span *ngIf="!user.image">👤</span>
+                </div>
+                <div class="user-info-mini">
+                    <span class="user-name-mini">{{ user.name }}</span>
+                    <span class="user-handle-mini">@{{ user.username }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="search-empty" *ngIf="searchQuery().length >= 3 && searchResults().length === 0 && !isLoading()">
+            Tidak ada pengguna ditemukan.
         </div>
     </div>
 </div>

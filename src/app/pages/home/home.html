@@ -1,7 +1,7 @@
 <section class="hero-container">
     <div class="container hero-content">
         <!-- Left Side: Character Illustration Area -->
-        <div class="hero-visual">
+        <div class="hero-visual" (click)="startAdventure()" style="cursor: pointer;">
             <div class="character-composition">
                 <!-- Sword -->
                 <div class="sword"></div>
@@ -27,7 +27,7 @@
         <!-- Right Side: Call to Action -->
         <div class="hero-text">
             <h1>Jadilah Pahlawan Statistik!</h1>
-            <button class="btn-cta" routerLink="/learning">MULAI PETUALANGANMU!</button>
+            <button class="btn-cta" (click)="startAdventure()">MULAI PETUALANGANMU!</button>
         </div>
     </div>
 </section>

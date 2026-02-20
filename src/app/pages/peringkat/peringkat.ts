@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatsRibbon } from '../../components/widgets/stats-ribbon/stats-ribbon';
 import { DailyMissionWidget } from '../../components/widgets/daily-mission-widget/daily-mission-widget';
 import { KegiatanBpsWidget } from '../../components/widgets/kegiatan-bps-widget/kegiatan-bps-widget';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-peringkat',
@@ -11,20 +12,28 @@ import { KegiatanBpsWidget } from '../../components/widgets/kegiatan-bps-widget/
   templateUrl: './peringkat.html',
   styleUrl: './peringkat.css',
 })
-export class Peringkat {
-  activeTab = signal<'xp' | 'publikasi' | 'brs' | 'kuis'>('xp');
+export class Peringkat implements OnInit {
+  private userService = inject(UserService);
+  activeTab = signal<'points' | 'publications' | 'press' | 'quizzes'>('points');
+  leaders = signal<any[]>([]);
 
-  leaders = [
-    { rank: 1, name: 'Adi Nugroho', xp: '1073 XP', avatar: '🐱' },
-    { rank: 2, name: 'Siti Aminah', xp: '1032 XP', avatar: '🦊' },
-    { rank: 3, name: 'Budi Santoso', xp: '955 XP', avatar: '🐯' },
-    { rank: 4, name: 'Dewi Lestari', xp: '755 XP', avatar: '🐰' },
-    { rank: 5, name: 'Eko Prasetyo', xp: '340 XP', avatar: '🐸' },
-    { rank: 6, name: 'Fitri Handayani', xp: '270 XP', avatar: '🐼' },
-    { rank: 7, name: 'Guruh Soekarno', xp: '220 XP', avatar: '🦁' },
-  ];
+  constructor() {
+    effect(() => {
+      this.loadLeaderboard();
+    });
+  }
 
-  setTab(tab: 'xp' | 'publikasi' | 'brs' | 'kuis') {
+  ngOnInit() {
+    // Initial load handled by effect
+  }
+
+  loadLeaderboard() {
+    this.userService.getLeaderboard(this.activeTab()).subscribe((data: any) => {
+      this.leaders.set(data);
+    });
+  }
+
+  setTab(tab: 'points' | 'publications' | 'press' | 'quizzes') {
     this.activeTab.set(tab);
   }
 }

@@ -6,33 +6,35 @@
         </div>
 
         <div class="mission-categories">
-            <div class="category-section" *ngFor="let cat of categories">
-                <h3 class="category-title">{{ cat.title }}</h3>
+            <h3 class="category-title">Misi Hari Ini</h3>
 
-                <div class="mission-items-list">
-                    <div class="mission-item-card" *ngFor="let m of cat.missions" [class.completed-card]="m.completed">
-                        <div class="mission-left">
-                            <div class="mission-icon" *ngIf="!m.completed">⚡</div>
-                            <div class="mission-icon completed-badge" *ngIf="m.completed">
-                                <div class="badge-star">✔</div>
+            <div class="mission-items-list">
+                <div class="mission-item-card" *ngFor="let m of missions()" [class.completed-card]="m.isCompleted">
+                    <div class="mission-left">
+                        <div class="mission-icon" *ngIf="!m.isCompleted">⚡</div>
+                        <div class="mission-icon completed-badge" *ngIf="m.isCompleted">
+                            <div class="badge-star">✔</div>
+                        </div>
+                    </div>
+
+                    <div class="mission-right">
+                        <div class="mission-top-row">
+                            <div class="title-status">
+                                <h4>{{ m.mission.title }}</h4>
+                                <span class="status-pill-green" *ngIf="m.isCompleted">Selesai</span>
+                                <button *ngIf="m.isCompleted && !m.isClaimed" class="btn-claim-sm" (click)="claimReward(m)">
+                                    CLAIM
+                                </button>
+                                <span class="status-pill-gray" *ngIf="m.isClaimed">Diklaim</span>
+                            </div>
+                            <div class="mission-stats-text" *ngIf="!m.isCompleted">
+                                {{ m.currentCount }}/{{ m.mission.requiredCount }}
                             </div>
                         </div>
 
-                        <div class="mission-right">
-                            <div class="mission-top-row">
-                                <div class="title-status">
-                                    <h4>{{ m.title }}</h4>
-                                    <span class="status-pill-green" *ngIf="m.completed">Selesai</span>
-                                </div>
-                                <div class="mission-stats-text">
-                                    {{ m.unit }}: {{ m.progress }}/{{ m.total }}
-                                </div>
-                            </div>
-
-                            <div class="mission-progress-bar">
-                                <div class="progress-fill yellow"
-                                    [style.width.%]="(m.progress / m.total) * 100 > 100 ? 100 : (m.progress / m.total) * 100">
-                                </div>
+                        <div class="mission-progress-bar" *ngIf="!m.isCompleted">
+                            <div class="progress-fill yellow"
+                                [style.width.%]="(m.currentCount / m.mission.requiredCount) * 100">
                             </div>
                         </div>
                     </div>

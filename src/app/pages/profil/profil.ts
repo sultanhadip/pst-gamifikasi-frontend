@@ -1,8 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatsRibbon } from '../../components/widgets/stats-ribbon/stats-ribbon';
 import { DailyMissionWidget } from '../../components/widgets/daily-mission-widget/daily-mission-widget';
 import { SearchUserWidget } from '../../components/widgets/search-user-widget/search-user-widget';
+import { UserService } from '../../services/user.service';
+import { GamificationService } from '../../services/gamification.service';
 
 @Component({
   selector: 'app-profil',
@@ -11,62 +13,29 @@ import { SearchUserWidget } from '../../components/widgets/search-user-widget/se
   templateUrl: './profil.html',
   styleUrl: './profil.css',
 })
-export class Profil {
+export class Profil implements OnInit {
+  private userService = inject(UserService);
+  private gamificationService = inject(GamificationService);
+
   showAllAchievements = signal(false);
-  activeAchievementTab = signal('membaca');
+  activeAchievementTab = signal('all');
+  showTitlesModal = signal(false);
 
-  user = {
-    name: 'CHAINUR AR RASYID NASUTION',
-    role: 'admin',
-    joined: 'Juni 2025',
-    avatar: '🐲'
-  };
+  userProfile = signal<any>(null);
+  userProgress = signal<any>(null);
+  achievements = signal<any[]>([]);
+  titles = signal<any[]>([]);
 
-  stats = [
-    { label: 'Kehadiran beruntun', value: 1, icon: '🔥' },
-    { label: 'Total Poin', value: 0, icon: '⚡' },
-    { label: 'Publikasi yang sudah dibaca', value: 0, icon: '📑' },
-    { label: 'Berita Resmi Statistik yang sudah dibaca', value: 0, icon: '📁' }
-  ];
-
-  achievements = [
-    {
-      id: 1,
-      title: 'Membaca 1 Dokumen Statistik',
-      desc: 'Telah membaca 1 dokumen statistik',
-      progress: 0,
-      total: 1,
-      status: 'locked',
-      reward: 10
-    },
-    {
-      id: 2,
-      title: 'Membaca 3 Data',
-      desc: 'Telah membaca 3 data',
-      progress: 1,
-      total: 3,
-      status: 'in-progress',
-      reward: 20
-    },
-    {
-      id: 3,
-      title: 'Membaca 1 Data',
-      desc: 'Telah membaca 1 data',
-      progress: 1,
-      total: 1,
-      status: 'completed',
-      reward: 10
-    },
-    {
-      id: 4,
-      title: 'Membaca 5 Data',
-      desc: 'Telah membaca 5 data',
-      progress: 1,
-      total: 5,
-      status: 'locked',
-      reward: 30
-    }
-  ];
+  ngOnInit() {
+    this.userService.getMyProfile().subscribe(data => this.userProfile.set(data));
+    this.userService.getMyProgress().subscribe(data => this.userProgress.set(data));
+    this.gamificationService.getAchievements().subscribe((data: any) => {
+      this.achievements.set(data);
+    });
+    this.gamificationService.getMyTitles().subscribe((data: any) => {
+      this.titles.set(data);
+    });
+  }
 
   toggleAchievements() {
     this.showAllAchievements.set(!this.showAllAchievements());
@@ -74,5 +43,19 @@ export class Profil {
 
   setAchievementTab(tab: string) {
     this.activeAchievementTab.set(tab);
+  }
+
+  toggleTitlesModal() {
+    this.showTitlesModal.set(!this.showTitlesModal());
+  }
+
+  onSetTitle(titleId: number) {
+    this.gamificationService.setActiveTitle(titleId).subscribe(() => {
+      this.toggleTitlesModal();
+      // Refresh titles to see the active one
+      this.gamificationService.getMyTitles().subscribe((data: any) => {
+        this.titles.set(data);
+      });
+    });
   }
 }

@@ -1,6 +1,12 @@
-<div class="stats-ribbon">
+<div class="stats-ribbon" *ngIf="userProfile()">
     <div class="stat-item"><span class="icon-stat">🔍</span></div>
-    <div class="stat-item"><span class="icon-stat">🔥</span> 2</div>
-    <div class="stat-item"><span class="icon-stat">💎</span> 3</div>
-    <div class="stat-item"><span class="icon-stat">❤️</span> 2</div>
+    <div class="stat-item" title="Streaks">
+        <span class="icon-stat">🔥</span> {{ userProfile().streaks || 0 }}
+    </div>
+    <div class="stat-item" title="Diamonds">
+        <span class="icon-stat">💎</span> {{ userProfile().diamonds || 0 }}
+    </div>
+    <div class="stat-item" title="Points">
+        <span class="icon-stat">⭐</span> {{ userProgress()?.points || 0 }}
+    </div>
 </div>

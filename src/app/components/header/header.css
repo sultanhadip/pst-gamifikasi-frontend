@@ -94,12 +94,11 @@ header {
     align-items: center;
 }
 
-.btn-signin {
+.btn-signin, .btn-dashboard {
     background-color: var(--color-primary);
     color: white;
     border: none;
     border-radius: 6px;
-    /* Slightly rounded, screenshot shows rect with radius */
     padding: 0.6rem 1.5rem;
     font-weight: 600;
     font-size: 0.9rem;
@@ -108,6 +107,25 @@ header {
     letter-spacing: 0.5px;
 }
 
-.btn-signin:hover {
+.btn-signin:hover, .btn-dashboard:hover {
     background-color: var(--color-primary-hover);
+}
+
+.btn-signout {
+    background-color: transparent;
+    color: #64748b;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: all 0.2s;
+}
+
+.btn-signout:hover {
+    background-color: #fee2e2;
+    color: #ef4444;
+    border-color: #fecaca;
 }

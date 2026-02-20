@@ -1,9 +1,9 @@
 <div class="page-container">
     <!-- Main Content -->
-    <div class="main-content">
+    <div class="main-content" *ngIf="detail()">
         <div class="top-bar">
             <button class="btn-back" [routerLink]="['/publikasi']">←</button>
-            <h2 class="page-title">{{ detail.title }}</h2>
+            <h2 class="page-title">{{ detail().title }}</h2>
         </div>
 
         <div class="detail-card">
@@ -14,54 +14,40 @@
             <div class="card-body">
                 <!-- Left Column: Image & Buttons -->
                 <div class="left-col">
-                    <div class="book-cover-orange">
+                    <img *ngIf="detail().coverImage" [src]="detail().coverImage" class="book-cover-img-detail">
+                    <div *ngIf="!detail().coverImage" class="book-cover-orange">
                         <div class="cover-top">
                             <span class="cover-logo">BPS</span>
                         </div>
-                        <div class="cover-title">DATA SOSIAL EKONOMI</div>
-                        <div class="cover-grid">
-                            <div class="grid-cell" *ngFor="let i of [1,2,3,4,5,6,7,8,9]"></div>
-                        </div>
+                        <div class="cover-title">{{ detail().title }}</div>
                         <div class="cover-footer">2025</div>
                     </div>
 
-                    <button class="btn-read">BACA PUBLIKASI</button>
-                    <button class="btn-quiz">QUIZ</button>
+                    <button class="btn-read" (click)="onMarkRead()">BACA PUBLIKASI (XP +{{ detail().xpReward }})</button>
+                    <button class="btn-quiz" routerLink="/learning/quiz">QUIZ</button>
                 </div>
 
                 <!-- Right Column: Info -->
                 <div class="right-col">
                     <div class="info-date">
-                        <span class="icon-calendar">📅</span> {{ detail.releaseDate }}
+                        <span class="icon-calendar">📅</span> {{ detail().createdAt | date }}
                     </div>
-                    <h3 class="info-title">{{ detail.title }}</h3>
+                    <h3 class="info-title">{{ detail().title }}</h3>
 
                     <div class="meta-grid">
                         <div class="meta-row">
-                            <span class="meta-label">Nomor Katalog</span>
-                            <span class="meta-value">: {{ detail.catalog }}</span>
+                            <span class="meta-label">XP Reward</span>
+                            <span class="meta-value">: {{ detail().xpReward }}</span>
                         </div>
-                        <div class="meta-row">
-                            <span class="meta-label">Nomor Publikasi</span>
-                            <span class="meta-value">: {{ detail.publication }}</span>
-                        </div>
-                        <div class="meta-row">
-                            <span class="meta-label">ISSN/ISBN</span>
-                            <span class="meta-value">: {{ detail.issn }}</span>
-                        </div>
-                        <div class="meta-row">
-                            <span class="meta-label">Scheduled Date</span>
-                            <span class="meta-value">: {{ detail.releaseDate }}</span>
-                        </div>
-                        <div class="meta-row">
-                            <span class="meta-label">Ukuran File</span>
-                            <span class="meta-value">: {{ detail.size }}</span>
+                        <div class="meta-row" *ngIf="detail().fileUrl">
+                            <span class="meta-label">File</span>
+                            <span class="meta-value">: <a [href]="detail().fileUrl" target="_blank">Download PDF</a></span>
                         </div>
                     </div>
 
                     <div class="abstract-section">
-                        <h4>Abstraksi</h4>
-                        <p>{{ detail.abstract }}</p>
+                        <h4>Deskripsi</h4>
+                        <p>{{ detail().description }}</p>
                     </div>
                 </div>
             </div>

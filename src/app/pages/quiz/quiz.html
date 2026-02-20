@@ -1,0 +1,53 @@
+<div class="quiz-container" *ngIf="challenges().length > 0">
+    <div class="quiz-main" *ngIf="!completed()">
+        <div class="quiz-header">
+            <button class="btn-exit" (click)="finish()">×</button>
+            <div class="progress-container">
+                <div class="progress-fill" [style.width.%]="((currentIndex() + 1) / challenges().length) * 100"></div>
+            </div>
+            <app-stats-ribbon></app-stats-ribbon>
+        </div>
+
+        <div class="quiz-content">
+            <h2 class="question">{{ challenges()[currentIndex()].question }}</h2>
+            
+            <div class="options-grid">
+                <div class="option-card" 
+                     *ngFor="let opt of challenges()[currentIndex()].options"
+                     [class.selected]="selectedOptionId() === opt.id"
+                     [class.correct]="isCorrect() && selectedOptionId() === opt.id"
+                     [class.wrong]="isCorrect() === false && selectedOptionId() === opt.id"
+                     (click)="selectOption(opt.id)">
+                    <span class="option-text">{{ opt.text }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-footer" [class.show-feedback]="isCorrect() !== null">
+            <div class="feedback-area" *ngIf="isCorrect() !== null">
+                <div class="feedback-content" [class.correct]="isCorrect()">
+                    <span class="icon">{{ isCorrect() ? '✔️' : '❌' }}</span>
+                    <div class="text">
+                        <h3>{{ isCorrect() ? 'Luar Biasa!' : 'Tetap Semangat!' }}</h3>
+                        <p *ngIf="results()?.xpEarned > 0">+{{ results().xpEarned }} XP</p>
+                    </div>
+                </div>
+                <button class="btn-next" (click)="nextChallenge()">LAnjutkan</button>
+            </div>
+            <button class="btn-submit" *ngIf="isCorrect() === null" [disabled]="selectedOptionId() === null" (click)="submitAnswer()">PERIKSA</button>
+        </div>
+    </div>
+
+    <div class="quiz-summary" *ngIf="completed()">
+        <div class="summary-card">
+            <div class="trophy-vfx">🏆</div>
+            <h1>Petualangan Selesai!</h1>
+            <p>Selamat! Kamu telah menyelesaikan tantangan ini.</p>
+            <button class="btn-finish" (click)="finish()">KEMBALI KE BELAJAR</button>
+        </div>
+    </div>
+</div>
+
+<div class="loading-state" *ngIf="challenges().length === 0">
+    <p>Memuat tantangan...</p>
+</div>

@@ -6,23 +6,22 @@
         </div>
 
         <div class="cards-list">
-            <div class="publication-card" *ngFor="let item of brsList">
+            <div class="publication-card" *ngFor="let item of brsList()" (click)="onRead(item.id)">
                 <div class="card-image-wrapper">
-                    <!-- Placeholder for BRS cover (maybe different color?) -->
-                    <div class="book-cover-placeholder brs-theme">
+                    <img *ngIf="item.image" [src]="item.image" alt="Cover" class="pub-cover-img">
+                    <div *ngIf="!item.image" class="book-cover-placeholder brs-theme">
                         <div class="cover-header">
                             <span>BERITA RESMI STATISTIK</span>
                         </div>
                         <div class="cover-graphic">
-                            <span>NEWS</span>
-                            <span>2025</span>
+                            <span>XP +{{ item.xpReward }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="pub-meta">
                         <span class="icon-calendar">📅</span>
-                        <span>{{ item.date }}</span>
+                        <span>{{ item.releaseDate | date }}</span>
                     </div>
                     <h3 class="pub-title">{{ item.title }}</h3>
                     <p class="pub-description">{{ item.description }}</p>

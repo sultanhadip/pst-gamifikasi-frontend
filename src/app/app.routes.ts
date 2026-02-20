@@ -11,6 +11,8 @@ import { Peringkat } from './pages/peringkat/peringkat';
 import { Misi } from './pages/misi/misi';
 import { Profil } from './pages/profil/profil';
 import { Admin } from './pages/admin/admin';
+import { Quiz } from './pages/quiz/quiz';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     // Public Routes (with Header/Footer)
@@ -27,8 +29,10 @@ export const routes: Routes = [
     {
         path: '',
         component: DashboardLayout,
+        canActivate: [authGuard],
         children: [
             { path: 'learning', component: Learning },
+            { path: 'learning/quiz/:id', component: Quiz },
             { path: 'publikasi', component: Publikasi },
             { path: 'publikasi/:id', component: PublikasiDetail },
             { path: 'brs', component: Brs },

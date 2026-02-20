@@ -6,23 +6,22 @@
         </div>
 
         <div class="cards-list">
-            <div class="publication-card" *ngFor="let pub of publications" [routerLink]="['/publikasi', pub.id]">
+            <div class="publication-card" *ngFor="let pub of publications()" [routerLink]="['/publikasi', pub.id]">
                 <div class="card-image-wrapper">
-                    <!-- Placeholder for green book cover -->
-                    <div class="book-cover-placeholder">
+                    <img *ngIf="pub.coverImage" [src]="pub.coverImage" alt="Cover" class="pub-cover-img">
+                    <div *ngIf="!pub.coverImage" class="book-cover-placeholder">
                         <div class="cover-header">
-                            <span>STATISTIK PENDAPATAN FEBRUARI</span>
+                            <span>{{ pub.title }}</span>
                         </div>
                         <div class="cover-graphic">
-                            <span>income</span>
-                            <span>2025</span>
+                            <span>XP +{{ pub.xpReward }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="pub-meta">
                         <span class="icon-calendar">📅</span>
-                        <span>{{ pub.date }}</span>
+                        <span>{{ pub.createdAt | date }}</span>
                     </div>
                     <h3 class="pub-title">{{ pub.title }}</h3>
                     <p class="pub-description">{{ pub.description }}</p>

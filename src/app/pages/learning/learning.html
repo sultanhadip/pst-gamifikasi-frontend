@@ -3,45 +3,44 @@
     <div class="main-content">
         <div class="top-bar">
             <button class="btn-back">←</button>
-            <h2 class="page-title">Dasar-Dasar Statistik</h2>
+            <h2 class="page-title">{{ activeCourse()?.title || 'Loading...' }}</h2>
         </div>
 
-        <div class="course-header-card">
+        <div class="course-header-card" *ngIf="activeUnit()">
             <div class="card-content">
-                <h3>Materi 1</h3>
-                <p>Konsep Statistika Dasar</p>
+                <h3>Unit Active</h3>
+                <p>{{ activeUnit().title }}</p>
+                <small *ngIf="lessons().length > 0">{{ lessons().length }} Pelajaran Tersedia</small>
             </div>
-            <button class="btn-continue">
+            <button class="btn-continue" *ngIf="lessons().length > 0" [routerLink]="['/learning/quiz', lessons()[0].id]">
                 <span class="icon">📝</span> LANJUTKAN
             </button>
         </div>
 
-        <div class="pdf-banner">
-            <button class="btn-pdf">LIHAT MATERI PDF</button>
+        <div class="pdf-banner" *ngIf="activeCourse()">
+            <button class="btn-pdf">📖 KURIKULUM & MATERI PDF</button>
         </div>
 
         <div class="learning-path">
-            <div class="path-node start-node">
-                <span class="badge-start">MULAI</span>
-                <div class="node-circle active">
-                    <span>⭐</span>
+            <div *ngFor="let unit of units(); let i = index; let last = last">
+                <div class="path-node" [class.start-node]="i === 0">
+                    <span *ngIf="i === 0" class="badge-start">MULAI</span>
+                    
+                    <div class="node-circle" 
+                         [class.active]="activeUnit()?.id === unit.id" 
+                         [class.unlocked]="!unit.isLocked"
+                         [class.locked]="unit.isLocked"
+                         [class.boss]="unit.unlockCost > 0"
+                         (click)="selectUnit(unit)">
+                        <span>{{ i % 2 === 0 ? '⭐' : '👑' }}</span>
+                        <div *ngIf="unit.isLocked" class="lock-overlay">
+                            🔒 {{ unit.unlockCost }}
+                        </div>
+                    </div>
+                    <div class="node-title">{{ unit.title }}</div>
                 </div>
-            </div>
-
-            <div class="path-line"></div>
-
-            <div class="path-node">
-                <div class="node-circle locked">
-                    <span>⭐</span>
-                </div>
-            </div>
-
-            <div class="path-line"></div>
-
-            <div class="path-node">
-                <div class="node-circle locked boss">
-                    <span>👑</span>
-                </div>
+                
+                <div *ngIf="!last" class="path-line" [class.active]="!unit.isLocked"></div>
             </div>
         </div>
     </div>

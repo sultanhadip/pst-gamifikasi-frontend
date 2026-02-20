@@ -5,35 +5,28 @@
         <span class="widget-expand">↕</span>
     </div>
     <div class="widget-body">
-        <!-- Mission 1: In Progress -->
-        <div class="mission-item">
-            <div class="mission-icon">⚡</div>
-            <div class="mission-info">
-                <div class="mission-title">Dapatkan 50 Poin</div>
-                <div class="progress-bar">
-                    <div class="progress yellow" style="width: 60%"></div>
-                </div>
-                <div class="mission-stats">30/50 Poin</div>
-            </div>
+        <div *ngIf="missions().length === 0" class="no-missions">
+            Tidak ada misi hari ini.
         </div>
-
-        <!-- Mission 2: Completed -->
-        <div class="mission-item completed">
-            <div class="mission-icon">✅</div>
+        
+        <div *ngFor="let m of missions()" class="mission-item" [class.completed]="m.isCompleted">
+            <div class="mission-icon">{{ m.isCompleted ? '✅' : '⚡' }}</div>
             <div class="mission-info">
-                <div class="mission-title success">Baca Publikasi Selesai!</div>
-            </div>
-        </div>
-
-        <!-- Mission 3: Not started -->
-        <div class="mission-item">
-            <div class="mission-icon">⚡</div>
-            <div class="mission-info">
-                <div class="mission-title">Baca 1 Berita Resmi Statistik (BRS)</div>
-                <div class="progress-bar">
-                    <div class="progress gray" style="width: 0%"></div>
+                <div class="mission-title" [class.success]="m.isCompleted">
+                    {{ m.mission.title }}
                 </div>
-                <div class="mission-stats">0/1 BRS</div>
+                
+                <ng-container *ngIf="!m.isCompleted">
+                    <div class="progress-bar">
+                        <div class="progress yellow" [style.width.%]="(m.currentCount / m.mission.requiredCount) * 100"></div>
+                    </div>
+                    <div class="mission-stats">{{ m.currentCount }}/{{ m.mission.requiredCount }}</div>
+                </ng-container>
+
+                <button *ngIf="m.isCompleted && !m.isClaimed" (click)="claimReward(m)" class="btn-claim">
+                    CLAIM REWARD
+                </button>
+                <div *ngIf="m.isClaimed" class="claimed-text">Reward diklaim!</div>
             </div>
         </div>
     </div>

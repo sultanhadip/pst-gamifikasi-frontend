@@ -10,16 +10,21 @@
         </div>
 
         <div class="auth-content">
+            <!-- ERROR MESSAGE -->
+            <div *ngIf="errorMessage()" class="error-banner">
+                {{ errorMessage() }}
+            </div>
+
             <!-- SIGN IN FORM -->
             <div *ngIf="activeTab() === 'signin'" class="form-section">
                 <h2 class="form-title">Sign In</h2>
                 <p class="form-subtitle">Silahkan login menggunakan email dan password</p>
 
-                <form>
+                <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
                     <div class="form-group">
-                        <label>Email</label>
+                        <label>Username</label>
                         <div class="input-wrapper">
-                            <input type="email" placeholder="m@example.com">
+                            <input type="text" formControlName="username" placeholder="Username">
                             <span class="icon-right purple-asterisk">*</span>
                         </div>
                     </div>
@@ -30,24 +35,13 @@
                             <a href="#" class="forgot-link">Lupa password?</a>
                         </div>
                         <div class="input-wrapper">
-                            <input type="password" placeholder="Password">
-                            <span class="icon-right eye-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"
-                                    fill="currentColor">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path
-                                        d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.82l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.74-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" />
-                                </svg>
-                            </span>
+                            <input type="password" formControlName="password" placeholder="Password">
                         </div>
                     </div>
 
-                    <div class="form-group checkbox-group">
-                        <input type="checkbox" id="remember">
-                        <label for="remember">Ingat saya</label>
-                    </div>
-
-                    <button type="button" class="btn-primary full-width">LOGIN</button>
+                    <button type="submit" class="btn-primary full-width" [disabled]="isLoading()">
+                        {{ isLoading() ? 'LOGGING IN...' : 'LOGIN' }}
+                    </button>
                 </form>
             </div>
 
@@ -56,21 +50,21 @@
                 <h2 class="form-title">Sign Up</h2>
                 <p class="form-subtitle">Silahkan membuat akun baru</p>
 
-                <form>
+                <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
                     <div class="form-group">
                         <label>Nama Lengkap</label>
-                        <input type="text" placeholder="John Doe" class="simple-input">
+                        <input type="text" formControlName="name" placeholder="John Doe" class="simple-input">
                     </div>
 
                     <div class="form-group">
                         <label>Username</label>
-                        <input type="text" placeholder="username" class="simple-input">
+                        <input type="text" formControlName="username" placeholder="username" class="simple-input">
                     </div>
 
                     <div class="form-group">
                         <label>Email</label>
                         <div class="input-wrapper">
-                            <input type="email" placeholder="m@example.com">
+                            <input type="email" formControlName="email" placeholder="m@example.com">
                             <span class="icon-right purple-asterisk">*</span>
                         </div>
                     </div>
@@ -78,44 +72,20 @@
                     <div class="form-group">
                         <label>Password</label>
                         <div class="input-wrapper">
-                            <input type="password" placeholder="Password">
-                            <span class="icon-right eye-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"
-                                    fill="currentColor">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path
-                                        d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.82l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.74-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" />
-                                </svg>
-                            </span>
+                            <input type="password" formControlName="password" placeholder="Password">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label>Konfirmasi Password</label>
                         <div class="input-wrapper">
-                            <input type="password" placeholder="Confirm Password">
-                            <span class="icon-right eye-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"
-                                    fill="currentColor">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path
-                                        d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.82l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.74-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z" />
-                                </svg>
-                            </span>
+                            <input type="password" formControlName="confirmPassword" placeholder="Confirm Password">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Foto Profil (opsional)</label>
-                        <div class="avatar-select">
-                            <div class="avatar-placeholder">
-                                <span>🖼️</span>
-                            </div>
-                            <button type="button" class="btn-text">PILIH AVATAR</button>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn-primary full-width">BUAT AKUN BARU</button>
+                    <button type="submit" class="btn-primary full-width" [disabled]="isLoading()">
+                        {{ isLoading() ? 'CREATING ACCOUNT...' : 'BUAT AKUN BARU' }}
+                    </button>
                 </form>
             </div>
         </div>
