@@ -1,1 +1,317 @@
-<p>admin works!</p>
+<div class="admin-layout">
+    <!-- ADMIN SIDEBAR -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="pie-chart-icon">
+                    <div class="slice-red"></div>
+                    <div class="slice-yellow"></div>
+                </div>
+                <div class="logo-text-group">
+                    <span class="logo-main">StatLegend</span>
+                    <span class="logo-sub">ADMIN PANEL</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="admin-nav">
+            <button class="nav-item" [class.active]="activeTab() === 'content'" (click)="setActiveTab('content')">
+                <span class="icon">📚</span>
+                <span class="label">LEARN CONTENT</span>
+            </button>
+            <button class="nav-item" [class.active]="activeTab() === 'users'" (click)="setActiveTab('users')">
+                <span class="icon">👥</span>
+                <span class="label">USERS</span>
+            </button>
+            <button class="nav-item" [class.active]="activeTab() === 'user-detail'"
+                (click)="setActiveTab('user-detail')">
+                <span class="icon">📄</span>
+                <span class="label">USER DETAIL</span>
+            </button>
+            <a routerLink="/" class="nav-item">
+                <span class="icon">🏠</span>
+                <span class="label">BACK TO APP</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <button class="btn-signout">
+                <div class="signout-icon-wrapper">
+                    <!-- Custom SVG Exit Icon similar to screenshot -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                </div>
+                <span class="label">SIGN OUT</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="admin-main">
+
+        <!-- VIEW: CONTENT MANAGEMENT -->
+        <div *ngIf="activeTab() === 'content'" class="admin-view">
+            <header class="view-header">
+                <h1>Learning Content Management</h1>
+            </header>
+
+            <section class="view-section">
+                <div class="section-header">
+                    <h2>Courses</h2>
+                    <div class="section-actions">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" placeholder="Search courses by title or ID...">
+                        </div>
+                        <button class="btn-add">
+                            <span class="plus">⊕</span> ADD COURSE
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Title</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let course of courses">
+                                <td>{{course.id}}</td>
+                                <td class="td-image"><span class="table-img">{{course.image}}</span></td>
+                                <td>{{course.title}}</td>
+                                <td class="text-right"><button class="btn-more">•••</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="view-section">
+                <div class="section-header">
+                    <h2>Units</h2>
+                    <div class="section-actions">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" placeholder="Search units by title, desc, course...">
+                        </div>
+                        <button class="btn-add">
+                            <span class="plus">⊕</span> ADD UNIT
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Course</th>
+                                <th>Order</th>
+                                <th>Cost</th>
+                                <th>Description</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let unit of units">
+                                <td>{{unit.id}}</td>
+                                <td><strong>{{unit.title}}</strong></td>
+                                <td class="text-secondary">{{unit.course}}</td>
+                                <td>{{unit.order}}</td>
+                                <td>{{unit.cost}}</td>
+                                <td>{{unit.description}}</td>
+                                <td class="text-right"><button class="btn-more">•••</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: USER MANAGEMENT -->
+        <div *ngIf="activeTab() === 'users'" class="admin-view">
+            <header class="view-header">
+                <h1>User Management</h1>
+            </header>
+
+            <section class="view-section">
+                <div class="section-header">
+                    <h2>Administrators (1)</h2>
+                </div>
+                <div class="search-row">
+                    <div class="search-box wide">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search admins by name, email, username...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Joined</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let admin of admins">
+                                <td><span class="avatar-sm">{{admin.avatar}}</span></td>
+                                <td><strong>{{admin.name}}</strong></td>
+                                <td>{{admin.email}}</td>
+                                <td>{{admin.username}}</td>
+                                <td><span class="badge badge-admin">{{admin.role}}</span></td>
+                                <td><span class="status-active">{{admin.status}}</span></td>
+                                <td>{{admin.joined}}</td>
+                                <td class="text-right"><button class="btn-more">•••</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="view-section">
+                <div class="section-header">
+                    <h2>Regular Users (53)</h2>
+                </div>
+                <div class="search-row">
+                    <div class="search-box wide">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" placeholder="Search regulars by name, email, username...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th class="text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of regularUsers">
+                                <td><span class="avatar-sm blurred">👤</span></td>
+                                <td class="blurred"><strong>{{user.name}}</strong></td>
+                                <td class="blurred">{{user.email}}</td>
+                                <td class="blurred">{{user.username}}</td>
+                                <td><span class="badge badge-user">{{user.role}}</span></td>
+                                <td><span class="status-active">{{user.status}}</span></td>
+                                <td class="text-right"><button class="btn-more">•••</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- VIEW: USER DETAIL -->
+        <div *ngIf="activeTab() === 'user-detail'" class="admin-view">
+            <header class="view-header">
+                <h1>User Detail Lookup</h1>
+            </header>
+
+            <div class="search-row-container">
+                <div class="search-box banner-search">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search by Email or Username...">
+                </div>
+            </div>
+
+            <div class="detail-card">
+                <div class="detail-top">
+                    <div class="detail-avatar-large">👤</div>
+                    <div class="detail-title-group">
+                        <h2>{{userDetail.name}}</h2>
+                        <span class="badge badge-admin">{{userDetail.role}}</span>
+                    </div>
+                </div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">ID:</span>
+                        <span class="detail-value text-secondary">{{userDetail.id}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Username:</span>
+                        <span class="detail-value">{{userDetail.username}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Email:</span>
+                        <span class="detail-value">{{userDetail.email}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Email Verified:</span>
+                        <span class="detail-value text-success">✅</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Level:</span>
+                        <span class="detail-value">{{userDetail.level}} ({{userDetail.levelLabel}})</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Active Course:</span>
+                        <span class="detail-value">{{userDetail.activeCourse}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Streaks:</span>
+                        <span class="detail-value">{{userDetail.streaks}} (Last: {{userDetail.lastStreak}})</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Diamonds:</span>
+                        <span class="detail-value">{{userDetail.diamonds}}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Joined:</span>
+                        <span class="detail-value">{{userDetail.joined}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <h3>Total Progress</h3>
+                <div class="progress-stats">
+                    <div class="stat-pill">Points: {{userDetail.progress.points}}</div>
+                    <div class="stat-pill">Publications: {{userDetail.progress.publications}}</div>
+                    <div class="stat-pill">Press: {{userDetail.progress.press}}</div>
+                    <div class="stat-pill">Quizzes: {{userDetail.progress.quizzes}}</div>
+                </div>
+            </div>
+
+            <div class="info-group">
+                <h3>Linked Accounts (1)</h3>
+                <div class="table-container transparent">
+                    <table class="admin-table mini">
+                        <thead>
+                            <tr>
+                                <th>Provider</th>
+                                <th>Account ID</th>
+                                <th>Linked At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let acc of userDetail.linkedAccounts">
+                                <td><span class="badge badge-light">{{acc.provider}}</span></td>
+                                <td class="text-secondary blurred">{{acc.accountId}}</td>
+                                <td>{{acc.linkedAt}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

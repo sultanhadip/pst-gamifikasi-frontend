@@ -34,8 +34,9 @@ export const routes: Routes = [
             { path: 'brs', component: Brs },
             { path: 'peringkat', component: Peringkat },
             { path: 'misi', component: Misi },
-            { path: 'profil', component: Profil },
-            { path: 'admin', component: Admin }
+            { path: 'profil', component: Profil }
         ]
-    }
+    },
+    // Admin Route (Separate Layout)
+    { path: 'admin', component: Admin }
 ];

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { StatsRibbon } from '../../components/widgets/stats-ribbon/stats-ribbon';
 import { FilterWidget } from '../../components/widgets/filter-widget/filter-widget';
 import { DailyMissionWidget } from '../../components/widgets/daily-mission-widget/daily-mission-widget';
@@ -8,7 +7,7 @@ import { DailyMissionWidget } from '../../components/widgets/daily-mission-widge
 @Component({
   selector: 'app-brs',
   standalone: true,
-  imports: [CommonModule, RouterLink, StatsRibbon, FilterWidget, DailyMissionWidget],
+  imports: [CommonModule, StatsRibbon, FilterWidget, DailyMissionWidget],
   templateUrl: './brs.html',
   styleUrl: './brs.css',
 })
