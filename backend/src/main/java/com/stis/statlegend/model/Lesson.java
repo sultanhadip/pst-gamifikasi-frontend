@@ -19,14 +19,18 @@ public class Lesson {
     private Long id;
 
     private String title;
-    
+
     private Integer orderIndex;
+
+    @Column(columnDefinition = "TEXT")
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "unit_id")
     @JsonIgnore
     private Unit unit;
 
+    @Builder.Default
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Challenge> challenges = new ArrayList<>();
 }

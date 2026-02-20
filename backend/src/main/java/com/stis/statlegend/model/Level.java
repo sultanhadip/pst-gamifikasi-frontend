@@ -20,5 +20,8 @@ public class Level {
     @Column(nullable = false)
     private Integer experienceRequired;
 
+    @Builder.Default
+    private Integer rewardDiamonds = 0;
+
     private String quote;
 }

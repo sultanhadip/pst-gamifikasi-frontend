@@ -27,15 +27,15 @@ public class User {
 
     private String name;
     private String image;
-    
+
     @Builder.Default
     private Integer diamonds = 0;
-    
+
     @Builder.Default
     private Integer streaks = 0;
-    
+
     private LocalDateTime lastStreakDate;
-    
+
     @ManyToOne
     @JoinColumn(name = "level_id")
     private Level level;
@@ -45,6 +45,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Builder.Default
     private Boolean banned = false;
     private String banReason;
 

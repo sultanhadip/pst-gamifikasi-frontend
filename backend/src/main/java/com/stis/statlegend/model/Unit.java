@@ -19,12 +19,12 @@ public class Unit {
     private Long id;
 
     private String title;
-    
+
     @Column(length = 2000)
     private String description;
-    
+
     private Integer orderIndex;
-    
+
     @Builder.Default
     private Integer unlockCost = 0;
 
@@ -33,6 +33,7 @@ public class Unit {
     @JsonIgnore
     private Course course;
 
+    @Builder.Default
     @OneToMany(mappedBy = "unit", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Lesson> lessons = new ArrayList<>();
 }

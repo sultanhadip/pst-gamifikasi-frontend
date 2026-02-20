@@ -23,7 +23,7 @@ public class Challenge {
 
     @Column(length = 2000)
     private String question;
-    
+
     private Integer orderIndex;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,6 +31,7 @@ public class Challenge {
     @JsonIgnore
     private Lesson lesson;
 
+    @Builder.Default
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChallengeOption> options = new ArrayList<>();
 

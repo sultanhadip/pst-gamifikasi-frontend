@@ -19,10 +19,11 @@ public class Course {
 
     private String title;
     private String imageSrc;
-    
+
     @Column(length = 2000)
     private String description;
 
+    @Builder.Default
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Unit> units = new ArrayList<>();
 }

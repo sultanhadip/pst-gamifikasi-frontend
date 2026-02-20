@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import com.stis.statlegend.service.GamificationService;
 
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class GamificationController {
     public ResponseEntity<?> setActiveTitle(@PathVariable Long titleId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) auth.getPrincipal();
-        
+
         UserTitle targetTitle = userTitleRepository.findByUserIdAndTitleId(userDetails.getId(), titleId)
                 .orElseThrow(() -> new RuntimeException("Title not unlocked yet"));
 

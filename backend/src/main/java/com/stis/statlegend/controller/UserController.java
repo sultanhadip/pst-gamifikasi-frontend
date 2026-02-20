@@ -18,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -42,41 +41,43 @@ public class UserController {
     public ResponseEntity<?> getMyProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        
+
         User user = userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new RuntimeException("Error: User is not found."));
 
         return ResponseEntity.ok(user);
     }
-    
+
     @PatchMapping("/me/update")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> updateProfile(@RequestBody User updatedUser) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        
+
         User user = userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new RuntimeException("Error: User is not found."));
-        
+
         // Update fields if they are present in request
-        if(updatedUser.getName() != null) user.setName(updatedUser.getName());
-        if(updatedUser.getImage() != null) user.setImage(updatedUser.getImage());
+        if (updatedUser.getName() != null)
+            user.setName(updatedUser.getName());
+        if (updatedUser.getImage() != null)
+            user.setImage(updatedUser.getImage());
         // Add more fields as needed
 
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("Profile updated successfully!"));
     }
-    
+
     @PostMapping("/me/add-password")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> addPassword(@RequestParam String newPassword) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        
+
         User user = userRepository.findById(userDetails.getId()).orElseThrow();
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
-        
+
         return ResponseEntity.ok(new MessageResponse("Password added successfully!"));
     }
 
@@ -85,11 +86,11 @@ public class UserController {
     public ResponseEntity<?> setActiveCourse(@RequestParam Integer courseId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        
+
         User user = userRepository.findById(userDetails.getId()).orElseThrow();
         user.setActiveCourseId(courseId);
         userRepository.save(user);
-        
+
         return ResponseEntity.ok(new MessageResponse("Active course updated!"));
     }
 

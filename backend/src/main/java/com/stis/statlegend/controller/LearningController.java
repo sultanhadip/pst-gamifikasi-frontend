@@ -17,7 +17,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -25,10 +24,10 @@ import java.util.UUID;
 public class LearningController {
     @Autowired
     CourseRepository courseRepository;
-    
+
     @Autowired
     UnitRepository unitRepository;
-    
+
     @Autowired
     LessonRepository lessonRepository;
 
@@ -54,15 +53,15 @@ public class LearningController {
                 .orElseThrow(() -> new RuntimeException("Error: Course is not found."));
         return ResponseEntity.ok(course);
     }
-    
+
     @GetMapping("/{courseId}/units")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<UnitResponse> getUnitsByCourse(@PathVariable Long courseId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        
+
         List<Unit> units = unitRepository.findByCourseIdOrderByOrderIndexAsc(courseId);
-        
+
         return units.stream().map(unit -> {
             boolean isLocked = false;
             if (unit.getUnlockCost() > 0) {
@@ -84,7 +83,7 @@ public class LearningController {
     public List<Lesson> getLessonsByUnit(@PathVariable Long unitId) {
         return lessonRepository.findByUnitIdOrderByOrderIndexAsc(unitId);
     }
-    
+
     @GetMapping("/lessons/{lessonId}/challenges")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public List<Challenge> getChallengesByLesson(@PathVariable Long lessonId) {
@@ -96,17 +95,17 @@ public class LearningController {
     public ResponseEntity<ApiResponse> unlockUnit(@RequestBody UnlockUnitRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        
+
         ApiResponse response = learningService.unlockUnit(userDetails.getId(), request.getUnitId());
         return ResponseEntity.ok(response);
     }
-    
+
     @PostMapping("/lessons/challenges/submit")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<ChallengeResult> submitAnswer(@RequestBody SubmitChallengeRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        
+
         ChallengeResult result = learningService.verifyAnswer(userDetails.getId(), request);
         return ResponseEntity.ok(result);
     }

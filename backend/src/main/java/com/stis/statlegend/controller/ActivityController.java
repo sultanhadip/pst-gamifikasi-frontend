@@ -1,6 +1,5 @@
 package com.stis.statlegend.controller;
 
-import com.stis.statlegend.dto.response.ApiResponse;
 import com.stis.statlegend.dto.response.MessageResponse;
 import com.stis.statlegend.model.*;
 import com.stis.statlegend.repository.*;
@@ -23,13 +22,13 @@ public class ActivityController {
 
     @Autowired
     PublicationRepository publicationRepository;
-    
+
     @Autowired
     UserPublicationRepository userPublicationRepository;
-    
+
     @Autowired
     BrsRepository brsRepository;
-    
+
     @Autowired
     UserReadBrsRepository userReadBrsRepository;
 
@@ -64,7 +63,7 @@ public class ActivityController {
                     .readAt(LocalDateTime.now())
                     .build();
             userPublicationRepository.save(up);
-            
+
             gamificationService.addExperience(user, publication.getXpReward());
             gamificationService.updateMissionProgress(user, Mission.MissionType.READ_PUBLICATION, 1);
             return ResponseEntity.ok(new MessageResponse("Publication read! XP Awarded."));
@@ -97,7 +96,7 @@ public class ActivityController {
                     .readAt(LocalDateTime.now())
                     .build();
             userReadBrsRepository.save(urb);
-            
+
             gamificationService.addExperience(user, brsItem.getXpReward());
             gamificationService.updateMissionProgress(user, Mission.MissionType.READ_BRS, 1);
             return ResponseEntity.ok(new MessageResponse("BRS read! XP Awarded."));

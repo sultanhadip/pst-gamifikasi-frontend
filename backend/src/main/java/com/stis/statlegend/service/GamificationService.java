@@ -5,7 +5,6 @@ import com.stis.statlegend.model.Mission;
 import com.stis.statlegend.model.User;
 import com.stis.statlegend.model.UserMission;
 import com.stis.statlegend.repository.LevelRepository;
-import com.stis.statlegend.repository.MissionRepository;
 import com.stis.statlegend.repository.UserMissionRepository;
 import com.stis.statlegend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,20 +23,20 @@ public class GamificationService {
     private final UserRepository userRepository;
     private final LevelRepository levelRepository;
     private final UserMissionRepository userMissionRepository;
-    private final MissionRepository missionRepository;
 
     @Transactional
     public void addExperience(User user, int points) {
         // Update total progress
-        // (Assuming we have a relation or field for total XP, let's use a field for simplicity in this example)
+        // (Assuming we have a relation or field for total XP, let's use a field for
+        // simplicity in this example)
         // For now we assume user has an implicit XP field or we use UserTotalProgress
-        
+
         // Update streaks
         updateStreak(user);
 
         // Cek kenaikan level
         checkLevelUp(user);
-        
+
         userRepository.save(user);
     }
 
@@ -86,16 +84,15 @@ public class GamificationService {
     @Transactional
     public void updateMissionProgress(User user, Mission.MissionType type, int increment) {
         LocalDate today = LocalDate.now();
-        Optional<UserMission> userMissionOpt = userMissionRepository
-                .findByUserIdAndMissionIdAndDate(user.getId(), null, today); // Simplified logic
 
-        // In a real scenario, we would iterate through all active daily missions of this type
+        // In a real scenario, we would iterate through all active daily missions of
+        // this type
         List<UserMission> activeMissions = userMissionRepository.findByUserIdAndDate(user.getId(), today);
-        
+
         for (UserMission um : activeMissions) {
             if (um.getMission().getType() == type && !um.getIsCompleted()) {
                 um.setCurrentCount(um.getCurrentCount() + increment);
-                
+
                 if (um.getCurrentCount() >= um.getMission().getRequiredCount()) {
                     um.setIsCompleted(true);
                     um.setCompletedAt(LocalDateTime.now());

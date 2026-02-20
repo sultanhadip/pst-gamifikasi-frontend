@@ -1,6 +1,7 @@
 package com.stis.statlegend.service;
 
 import com.stis.statlegend.dto.request.SubmitChallengeRequest;
+import com.stis.statlegend.dto.response.ApiResponse;
 import com.stis.statlegend.dto.response.ChallengeResult;
 import com.stis.statlegend.model.*;
 import com.stis.statlegend.repository.*;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,7 +28,7 @@ public class LearningService {
 
     @Autowired
     private ChallengeOptionRepository challengeOptionRepository;
-    
+
     @Autowired
     private ChallengeProgressRepository challengeProgressRepository;
 
@@ -87,7 +87,7 @@ public class LearningService {
             // Check if already completed to avoid duplicate points
             if (!challengeProgressRepository.existsByUserIdAndChallengeId(userId, challenge.getId())) {
                 pointsEarned = 10; // Default points per challenge, can be dynamic
-                
+
                 // Save progress
                 ChallengeProgress progress = ChallengeProgress.builder()
                         .user(user)
@@ -98,7 +98,7 @@ public class LearningService {
 
                 // Add XP (and update level if needed)
                 gamificationService.addExperience(user, pointsEarned);
-                
+
                 // Add Diamonds occasionally? (Optional logic)
                 gamificationService.addDiamonds(user, 1);
 
